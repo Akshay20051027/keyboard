@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Keyboard</title>
+  <style>
+    body {
+      background-color: #c1f0f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    input {
+      width: 80%;
+      padding: 15px;
+      font-size: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      border: 1px solid #64ccc5;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 170, 170, 0.1);
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 20px;
+      background-color: #a0e7e5;
+      padding: 50px;
+      margin: auto;
+      width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 170, 170, 0.2);
+      border: 1px solid #64ccc5;
+    }
+
+    .container > div {
+      background-color: #e0ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: auto;
+      border-radius: 5px;
+      color: #007f7f;
+      transition: background-color 0.3s ease;
+      padding: 10px;
+      user-select: none;
+    }
+
+    .container > div:hover {
+      background-color: #b2fefa;
+      cursor: pointer;
+    }
+
+    #shift-left,#shift-right, #enter {
+      grid-column: span 2;
+    }
+
+    #space {
+      grid-column: span 5;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Input Box -->
+  <input type="text" id="input-box" placeholder="Type here..." readonly />
+
+  <!-- Keyboard Layout -->
+  <div class="container" id="keyboard">
+    <div>~</div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>0</div>
+    <div>-</div>
+    <div>+</div>
+    <div data-key="backspace">backspace</div>
+
+    <div>tab</div>
+    <div>q</div>
+    <div>w</div>
+    <div>e</div>
+    <div>r</div>
+    <div>t</div>
+    <div>y</div>
+    <div>u</div>
+    <div>i</div>
+    <div>o</div>
+    <div>p</div>
+    <div>[</div>
+    <div>]</div>
+    <div>\</div>
+
+    <div>cplck</div>
+    <div>a</div>
+    <div>s</div>
+    <div>d</div>
+    <div>f</div>
+    <div>g</div>
+    <div>h</div>
+    <div>j</div>
+    <div>k</div>
+    <div>l</div>
+    <div>;</div>
+    <div>'</div>
+    <div id="enter" data-key="enter">enter</div>
+
+    <div id="shift-left">shift</div>
+    <div>z</div>
+    <div>x</div>
+    <div>c</div>
+    <div>v</div>
+    <div>b</div>
+    <div>n</div>
+    <div>m</div>
+    <div>&lt;</div>
+    <div>&gt;</div>
+    <div>/</div>
+    <div id="shift-right">shift</div>
+
+    <div>ctrl</div>
+    <div>opt</div>
+    <div>win</div>
+    <div>alt</div>
+    <div id="space" data-key="space">space</div>
+    <div>alt</div>
+    <div>ctrl</div>
+    <div>&larr;</div>
+    <div>&uarr;</div>
+    <div>&rarr;</div>
+  </div>
+
+  <script>
+    const inputBox = document.getElementById("input-box");
+    const keys = document.querySelectorAll(".container > div");
+
+    keys.forEach(key => {
+      key.addEventListener("click", () => {
+        const value = key.innerText.trim();
+        const special = key.dataset.key;
+
+        if (special === "backspace") {
+          inputBox.value = inputBox.value.slice(0, -1);
+        } else if (special === "space") {
+          inputBox.value += " ";
+        } else if (special === "enter") {
+          alert("Message sent successfully!");
+        } else if (!["tab", "ctrl", "shift", "opt", "win", "alt", "cplck"].includes(value.toLowerCase())) {
+          inputBox.value += value;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
